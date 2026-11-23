@@ -1,0 +1,36 @@
+VOID SURVIVOR – Android Edition
+================================
+
+SCHNELL SPIELEN
+Öffne index.html auf einem Android-Handy in einem Browser. Das Spiel
+funktioniert ohne externe Bibliotheken oder Internetzugriff. Bei manchen
+Browsern können lokale Dateien Einschränkungen für Vollbild/PWA haben.
+
+STEUERUNG
+Linker Joystick: Bewegung
+Rechter Joystick: Schussrichtung steuern (unabhängig von der Bewegung)
+Beim Loslassen bleibt die letzte Zielrichtung erhalten.
+Alternativ lässt sich weiterhin direkt auf dem Spielfeld zielen.
+DASH: Ausweichen; währenddessen und kurz danach unverwundbar
+KAUFEN: Fähigkeit in Reichweite im Sanctuary erwerben
+Neon-Portal unten im Sanctuary betreten: nächster Run
+Oben: Ton, Auto-Zielen, Pause
+PAUSE: Weiterspielen, sofort zum Sanctuary (ohne Todesbelohnung),
+oder Spielstand vollständig zurücksetzen (mit Sicherheitsabfrage).
+Sanctuary übernimmt die aktuelle Spielerposition. Beim Zurücksetzen
+werden alle Splitter, Skills und die Run-Nummer gelöscht.
+
+ALS APP INSTALLIEREN (PWA)
+Für eine richtige installierbare Web-App mit Offline-Unterstützung das
+komplette Verzeichnis auf eine HTTPS-Website laden (z.B. GitHub Pages).
+Dann auf Android in Chrome öffnen und über ⋮ > "App installieren" bzw.
+"Zum Startbildschirm hinzufügen" installieren.
+Die PWA ist für Querformat konfiguriert.
+
+WICHTIG
+Beim direkten Öffnen der HTML-Datei im Dateimanager funktionieren das
+Spiel und die Sounds, aber die PWA-Installation benötigt normalerweise
+HTTPS oder localhost. Eine APK ist in diesem Paket nicht enthalten.
+
+SPIELSTAND
+Seelensplitter und Skills werden lokal im Browser gespeichert.
