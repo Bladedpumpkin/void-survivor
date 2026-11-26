@@ -1,4 +1,4 @@
-const CACHE = 'void-survivor-android-v4';
+const CACHE = 'void-survivor-android-v5';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -17,25 +17,30 @@ self.addEventListener('activate', event => {
   );
 });
 
-function addMenuReward(response) {
+function addPauseReward(response) {
   return response.text().then(html => {
-    const startButton = '<button id="start" class="start">SPIEL STARTEN</button>';
-    const rewardButton = '<button id="bonus-shards" class="start" style="margin-top:10px;padding:10px 18px;font-size:13px;background:#39245d;border-color:#c49cff;box-shadow:0 0 18px #b280ff33">✦ +100 SEELENSPLITTER</button>';
-    const originalStartHandler = "$('start').addEventListener('click',()=>{";
-    const rewardHandler = "$('bonus-shards').addEventListener('click',()=>{souls+=100;save();hud();AudioFX.init();AudioFX.play('pickup');$('bonus-shards').textContent='✦ 100 SPLITTER ERHALTEN!';});";
+    const menuButton = '<button id="start" class="start">SPIEL STARTEN</button>';
+    const pauseResumeButton = '<button id="resume" class="start">WEITERSPIELEN</button>';
+    const pauseRewardButton = '<button id="bonus-shards" class="start secondary">✦ +100 SEELENSPLITTER</button>';
+    const pauseHandlerAnchor = "$('pause').onclick=pause;";
+    const rewardHandler = "$('bonus-shards').addEventListener('click',()=>{if(state!=='pause')return;souls+=100;save();hud();AudioFX.init();AudioFX.play('pickup');banner('+100 SEELENSPLITTER');});";
 
-    if (!html.includes(startButton) || !html.includes(originalStartHandler)) {
+    if (!html.includes(menuButton) || !html.includes(pauseResumeButton) || !html.includes(pauseHandlerAnchor)) {
       return new Response(html, { status: response.status, statusText: response.statusText, headers: response.headers });
     }
 
     const updatedHtml = html
-      .replace(startButton, `${startButton}${rewardButton}`)
-      .replace(originalStartHandler, `${rewardHandler}${originalStartHandler}`);
+      .replace(menuButton, menuButton)
+      .replace(pauseResumeButton, `${pauseResumeButton}${pauseRewardButton}`)
+      .replace(pauseHandlerAnchor, `${rewardHandler}${pauseHandlerAnchor}`);
+    const headers = new Headers(response.headers);
+    headers.delete('content-length');
+    headers.delete('content-encoding');
 
     return new Response(updatedHtml, {
       status: response.status,
       statusText: response.statusText,
-      headers: response.headers
+      headers
     });
   });
 }
@@ -56,6 +61,6 @@ self.addEventListener('fetch', event => {
     }
 
     const isGamePage = request.mode === 'navigate' || url.pathname.endsWith('/index.html') || url.pathname === '/';
-    return isGamePage ? addMenuReward(response) : response;
+    return isGamePage ? addPauseReward(response) : response;
   })());
 });
